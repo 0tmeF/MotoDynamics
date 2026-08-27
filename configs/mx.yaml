@@ -1,0 +1,24 @@
+# Disciplina: motocross (450 cc).
+# Prioridad: estabilidad sobre terreno irregular y traccion en aceleracion
+# (limite de caballito alto) sin perder toda la agilidad.
+name: mx
+
+fixed:
+  front_radius: 0.35      # m, rueda de 21" con neumatico de tacos
+  rear_radius: 0.33       # m, rueda de 19"
+  mass: 190.0             # kg, moto + piloto con equipacion
+
+bounds:
+  wheelbase:       { min: 1.480, max: 1.505 }
+  rake:            { min: 0.460, max: 0.520 }   # ~26.4 - 29.8 deg
+  triple_offset:   { min: 0.018, max: 0.025 }
+  cg_height:       { min: 0.600, max: 0.680 }
+  cg_x_from_front: { min: 0.440, max: 0.500 }
+  swingarm_length: { min: 0.580, max: 0.660 }
+  swingarm_angle:  { min: 0.080, max: 0.220 }
+
+weights:
+  agility: 0.5
+  stability: 1.0
+  accel_limit: 0.8
+  brake_limit: 0.3

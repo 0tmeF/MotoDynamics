@@ -1,0 +1,27 @@
+# Disciplina: circuito (estilo MotoGP / Moto2).
+# Prioridad: agilidad para encadenar curvas y frenada fuerte y estable.
+name: gp
+
+# Parametros que NO optimiza el modelo (datos de la moto / neumaticos / piloto).
+fixed:
+  front_radius: 0.30      # m, radio bajo carga rueda delantera (slick 17")
+  rear_radius: 0.32       # m
+  mass: 240.0             # kg, moto + piloto
+
+# Parametros libres y sus limites [min, max] en unidades SI (rad para angulos).
+bounds:
+  wheelbase:       { min: 1.420, max: 1.470 }
+  rake:            { min: 0.370, max: 0.430 }   # ~21.2 - 24.6 deg
+  triple_offset:   { min: 0.024, max: 0.032 }
+  cg_height:       { min: 0.550, max: 0.620 }
+  cg_x_from_front: { min: 0.470, max: 0.530 }   # fraccion de carga sobre el eje trasero
+  swingarm_length: { min: 0.550, max: 0.620 }
+  swingarm_angle:  { min: 0.050, max: 0.180 }
+
+# Pesos de la suma ponderada de objetivos (positivo = se maximiza).
+# Provisionales: ajustar cuando las metricas tengan escala fisica homogenea.
+weights:
+  agility: 1.0
+  stability: 0.6
+  accel_limit: 0.3
+  brake_limit: 0.5
