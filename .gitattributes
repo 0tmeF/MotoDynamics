@@ -1,0 +1,4 @@
+# Normaliza finales de linea: LF en el repositorio para todo el texto.
+* text=auto eol=lf
+*.png binary
+*.pdf binary
