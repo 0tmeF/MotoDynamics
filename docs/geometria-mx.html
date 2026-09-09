@@ -1,0 +1,540 @@
+<title>Geometría MX 450</title>
+<style>
+:root {
+  --paper: #f3efe7;
+  --surface: #fbf9f4;
+  --surface-2: #ece5d7;
+  --ink: #26221c;
+  --ink-2: #6f675a;
+  --rule: #d8cfbe;
+  --dirt: #c2560f;
+  --dirt-soft: #e9d6c3;
+  --slate: #3f5560;
+  --slate-soft: #d4dee2;
+  --maxw: 900px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #14120d;
+    --surface: #1e1b15;
+    --surface-2: #2a251d;
+    --ink: #e9e3d6;
+    --ink-2: #a99f8c;
+    --rule: #38322a;
+    --dirt: #e07a3c;
+    --dirt-soft: #462c18;
+    --slate: #8fb0bd;
+    --slate-soft: #23343b;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #14120d;
+  --surface: #1e1b15;
+  --surface-2: #2a251d;
+  --ink: #e9e3d6;
+  --ink-2: #a99f8c;
+  --rule: #38322a;
+  --dirt: #e07a3c;
+  --dirt-soft: #462c18;
+  --slate: #8fb0bd;
+  --slate-soft: #23343b;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Saira", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.5;
+}
+.hoja { max-width: var(--maxw); margin: 0 auto; padding: clamp(1.25rem, 4vw, 2.5rem) clamp(1rem, 4vw, 2rem) 3.5rem; }
+
+h1, h2 {
+  font-family: "Saira Condensed", "Saira", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  margin: 0;
+  text-wrap: balance;
+}
+h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); text-transform: uppercase; line-height: 1; }
+h2 {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ink-2);
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+}
+.eyebrow {
+  font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  font-size: 0.78rem;
+  color: var(--dirt);
+  letter-spacing: 0.04em;
+}
+.intro { color: var(--ink-2); font-size: 0.95rem; max-width: 60ch; margin: 0.5rem 0 0; }
+.mono { font-family: "JetBrains Mono", ui-monospace, Menlo, monospace; }
+
+header {
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 1.1rem;
+  margin-bottom: 1.6rem;
+}
+
+/* Esquema */
+.esquema {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 5px;
+  padding: 0.5rem;
+  margin-bottom: 1.4rem;
+}
+.esquema svg { display: block; width: 100%; height: auto; }
+.linea-dim { stroke: var(--slate); stroke-width: 1; }
+.txt-dim {
+  fill: var(--slate);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+}
+.rueda { fill: none; stroke: var(--ink); stroke-width: 2.5; }
+.chasis { fill: none; stroke: var(--ink); stroke-width: 2; }
+.eje-dir { stroke: var(--dirt); stroke-width: 2; stroke-dasharray: 5 3; }
+.avance-mark { stroke: var(--dirt); stroke-width: 2.5; }
+.suelo { stroke: var(--rule); stroke-width: 1.5; }
+.cg-cross { stroke: var(--dirt); stroke-width: 1.6; }
+.cg-ring { fill: none; stroke: var(--dirt); stroke-width: 1.6; }
+.txt-cg { fill: var(--dirt); font-family: "JetBrains Mono", monospace; font-size: 11px; }
+
+/* Lecturas */
+.lecturas {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 1.8rem;
+}
+.tile { background: var(--surface); padding: 0.8rem 0.9rem 0.9rem; }
+.tile .k {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--ink-2);
+}
+.tile .v {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 1.35rem;
+  font-weight: 500;
+  margin-top: 0.25rem;
+  font-variant-numeric: tabular-nums;
+}
+.tile .u { font-size: 0.78rem; color: var(--ink-2); }
+.tile--reparto .v { font-size: 1.05rem; }
+.bar {
+  height: 5px;
+  margin-top: 0.5rem;
+  background: var(--slate);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.bar > i { display: block; height: 100%; background: var(--dirt); }
+
+/* Controles */
+.grupos { display: grid; gap: 1.5rem; }
+fieldset {
+  border: 1px solid var(--rule);
+  border-radius: 5px;
+  padding: 1rem 1.1rem 1.2rem;
+  margin: 0;
+}
+legend {
+  font-family: "Saira Condensed", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.8rem;
+  padding: 0 0.4rem;
+  color: var(--dirt);
+}
+.control {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.3rem;
+  padding: 0.55rem 0;
+}
+.control + .control { border-top: 1px solid var(--rule); }
+.control .fila { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.control label { font-size: 0.92rem; }
+.control .val {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.95rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.control .val.fijo { color: var(--ink-2); }
+.control .rng {
+  font-size: 0.7rem;
+  color: var(--ink-2);
+  font-family: "JetBrains Mono", monospace;
+}
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 22px;
+  background: transparent;
+  cursor: pointer;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 4px;
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+}
+input[type="range"]::-moz-range-track {
+  height: 4px;
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  margin-top: -7px;
+  border-radius: 50%;
+  background: var(--dirt);
+  border: 2px solid var(--surface);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--dirt);
+  border: 2px solid var(--surface);
+}
+input[type="range"]:disabled { cursor: not-allowed; }
+input[type="range"]:disabled::-webkit-slider-thumb { background: var(--ink-2); }
+input[type="range"]:disabled::-moz-range-thumb { background: var(--ink-2); }
+input[type="range"]:focus-visible { outline: 2px solid var(--dirt); outline-offset: 4px; }
+
+.acciones { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
+button {
+  font-family: "Saira Condensed", sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.8rem;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--ink);
+  background: var(--surface);
+  color: var(--ink);
+  border-radius: 3px;
+  cursor: pointer;
+}
+button:hover { background: var(--surface-2); }
+button.primario { background: var(--dirt); border-color: var(--dirt); color: #fff; }
+button:focus-visible { outline: 2px solid var(--dirt); outline-offset: 2px; }
+
+footer {
+  margin-top: 2.5rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.8rem;
+  color: var(--ink-2);
+}
+footer code {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.9em;
+  background: var(--surface-2);
+  padding: 0.05rem 0.3rem;
+  border-radius: 2px;
+}
+
+@media (max-width: 620px) {
+  .lecturas { grid-template-columns: repeat(2, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira:wght@400;500;600&family=Saira+Condensed:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<div class="hoja">
+  <header>
+    <p class="eyebrow">MotoDynamics · docs/geometria-mx.html</p>
+    <h1>Geometría base · MX 450</h1>
+    <p class="intro">
+      Explorador de la geometría independiente de una motocicleta de motocross.
+      Arrastra un parámetro y el esquema y las magnitudes derivadas (avance,
+      reparto de carga, límites de caballito y stoppie) se recalculan al vuelo,
+      con las fórmulas de <code>docs/theory.md</code>. Rangos y valores fijos de
+      <code>configs/mx.yaml</code>.
+    </p>
+  </header>
+
+  <div class="esquema">
+    <svg id="svg" viewBox="0 0 760 384" role="img"
+         aria-label="Esquema lateral de la motocicleta con la geometría actual"></svg>
+  </div>
+
+  <div class="lecturas" id="lecturas"></div>
+
+  <div class="grupos" id="grupos"></div>
+
+  <div class="acciones">
+    <button id="reset" class="primario" type="button">Reset a MX estándar</button>
+    <button data-preset="rapido" type="button">Dirección rápida</button>
+    <button data-preset="estable" type="button">Dirección estable</button>
+  </div>
+
+  <footer>
+    Avance normal <span class="mono">aₙ = R_f·sen ε − d</span>; avance a nivel
+    del suelo <span class="mono">a = aₙ / cos ε</span>
+    (<code>theory.md §1</code>). Reparto estático
+    <span class="mono">N_f = (1 − x_cg)·m·g</span> (<code>§2</code>). Límites
+    <span class="mono">a_x = fracción·g·p / h</span>
+    (<code>dynamics/steady.py</code>). Los índices heurísticos de agilidad y
+    estabilidad quedan fuera: son provisionales (<code>theory.md §5</code>).
+  </footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var G = 9.81;
+
+  // Parametros: [clave, etiqueta, min, max, paso, defecto, unidad, grupo, fijo?]
+  // Rangos y fijos de configs/mx.yaml (fijos: media del rango practico).
+  var PARAMS = [
+    ["wheelbase",       "Distancia entre ejes  p", 1.480, 1.505, 0.001, 1.492, "m",   "Dirección", false],
+    ["rake",            "Lanzamiento  ε",          26.5,  29.7,  0.1,   28.1,  "°",   "Dirección", false],
+    ["triple_offset",   "Offset de tijas  d",      0.018, 0.025, 0.0005, 0.021, "m",  "Dirección", false],
+    ["front_radius",    "Radio rueda delantera  R_f", 0.35, 0.35, 0.001, 0.35, "m",   "Dirección", true],
+    ["rear_radius",     "Radio rueda trasera  R_r",   0.33, 0.33, 0.001, 0.33, "m",   "Tren trasero", true],
+    ["cg_height",       "Altura del centro de masas  h", 0.600, 0.680, 0.005, 0.640, "m", "Masas", false],
+    ["cg_x_from_front", "Centro de masas (fracción tras.)", 0.440, 0.500, 0.005, 0.470, "", "Masas", false],
+    ["mass",            "Masa total  m",           190, 190, 1, 190, "kg", "Masas", true],
+    ["swingarm_length", "Longitud del basculante  l_s", 0.580, 0.660, 0.005, 0.620, "m", "Tren trasero", false],
+    ["swingarm_angle",  "Ángulo del basculante",   4.7, 12.5, 0.1, 8.6, "°", "Tren trasero", false]
+  ];
+  var PRESETS = {
+    rapido:  { rake: 26.5, triple_offset: 0.025, wheelbase: 1.480, cg_x_from_front: 0.440 },
+    estable: { rake: 29.7, triple_offset: 0.018, wheelbase: 1.505, cg_x_from_front: 0.500 }
+  };
+  var CLAVE_LS = "motodynamics.geometria-mx.v1";
+
+  var estado = {};
+  PARAMS.forEach(function (p) { estado[p[0]] = p[5]; });
+  try {
+    var guard = JSON.parse(localStorage.getItem(CLAVE_LS) || "null");
+    if (guard) PARAMS.forEach(function (p) {
+      if (typeof guard[p[0]] === "number") estado[p[0]] = guard[p[0]];
+    });
+  } catch (e) { /* sin localStorage */ }
+
+  function derivadas() {
+    var p = estado.wheelbase;
+    var eps = estado.rake * Math.PI / 180;
+    var d = estado.triple_offset;
+    var Rf = estado.front_radius;
+    var h = estado.cg_height;
+    var xcg = estado.cg_x_from_front;   // fracción de carga sobre eje trasero
+    var m = estado.mass;
+    var normalTrail = Rf * Math.sin(eps) - d;
+    var trail = normalTrail / Math.cos(eps);
+    var fracDelante = 1 - xcg;
+    var fracDetras = xcg;
+    return {
+      eps: eps,
+      normalTrail: normalTrail,
+      trail: trail,
+      fracDelante: fracDelante,
+      fracDetras: fracDetras,
+      cargaDelante: fracDelante * m * G,
+      cargaDetras: fracDetras * m * G,
+      caballito: fracDelante * G * p / h,
+      stoppie: fracDetras * G * p / h
+    };
+  }
+
+  // ---- Esquema SVG ----
+  var svg = document.getElementById("svg");
+  var W = 760, groundY = 300, pad = 90;
+
+  function dibujar() {
+    var g = derivadas();
+    var p = estado.wheelbase;
+    var Rf = estado.front_radius, Rr = estado.rear_radius;
+    var esc = (W - 2 * pad) / (p + Rf + Rr + 0.3 * p);   // px por metro
+    var xFront = W - pad - Rf * esc;
+    var xRear = xFront - p * esc;
+
+    var frontAxleX = xFront, frontAxleY = groundY - Rf * esc;
+    var rearAxleX = xRear, rearAxleY = groundY - Rr * esc;
+    var steerGroundX = xFront + g.trail * esc;   // el eje de dirección corta el suelo por delante
+    // punto alto del eje de dirección (para dibujarlo)
+    var topY = groundY - (Rf * esc + 70);
+    var topX = steerGroundX - (groundY - topY) * Math.tan(g.eps);
+
+    // basculante
+    var saLen = estado.swingarm_length * esc;
+    var saAng = estado.swingarm_angle * Math.PI / 180;
+    var pivotX = rearAxleX + saLen * Math.cos(saAng);
+    var pivotY = rearAxleY - saLen * Math.sin(saAng);
+
+    // centro de masas
+    var cgX = xFront - estado.cg_x_from_front * p * esc;
+    var cgY = groundY - estado.cg_height * esc;
+
+    var frontContactX = xFront, rearContactX = xRear;
+
+    var s = "";
+    s += '<line class="suelo" x1="20" y1="' + groundY + '" x2="' + (W - 20) + '" y2="' + groundY + '"/>';
+
+    // ruedas
+    s += '<circle class="rueda" cx="' + frontAxleX + '" cy="' + frontAxleY + '" r="' + (Rf * esc) + '"/>';
+    s += '<circle class="rueda" cx="' + rearAxleX + '" cy="' + rearAxleY + '" r="' + (Rr * esc) + '"/>';
+    s += '<circle fill="var(--ink)" cx="' + frontAxleX + '" cy="' + frontAxleY + '" r="3"/>';
+    s += '<circle fill="var(--ink)" cx="' + rearAxleX + '" cy="' + rearAxleY + '" r="3"/>';
+
+    // chasis esquematico: pipa de direccion -> pivote basculante -> zona motor
+    s += '<path class="chasis" d="M ' + topX + ' ' + topY +
+         ' L ' + (pivotX + 10) + ' ' + (pivotY - 40) +
+         ' L ' + pivotX + ' ' + pivotY + '"/>';
+    s += '<path class="chasis" d="M ' + topX + ' ' + topY +
+         ' L ' + (topX - 46) + ' ' + (topY - 14) + '"/>';   // manillar
+
+    // horquilla delantera (del eje alto a la mangueta)
+    s += '<line class="chasis" x1="' + topX + '" y1="' + topY +
+         '" x2="' + frontAxleX + '" y2="' + frontAxleY + '"/>';
+
+    // basculante
+    s += '<line class="chasis" x1="' + pivotX + '" y1="' + pivotY +
+         '" x2="' + rearAxleX + '" y2="' + rearAxleY + '"/>';
+    s += '<circle fill="var(--ink)" cx="' + pivotX + '" cy="' + pivotY + '" r="3"/>';
+
+    // eje de direccion prolongado hasta el suelo
+    s += '<line class="eje-dir" x1="' + topX + '" y1="' + (topY - 18) +
+         '" x2="' + steerGroundX + '" y2="' + groundY + '"/>';
+
+    // marca de avance (trail) sobre el suelo
+    s += '<line class="avance-mark" x1="' + frontContactX + '" y1="' + (groundY + 0) +
+         '" x2="' + steerGroundX + '" y2="' + groundY + '"/>';
+    s += '<line class="avance-mark" x1="' + frontContactX + '" y1="' + (groundY - 6) +
+         '" x2="' + frontContactX + '" y2="' + (groundY + 6) + '"/>';
+    s += '<line class="avance-mark" x1="' + steerGroundX + '" y1="' + (groundY - 6) +
+         '" x2="' + steerGroundX + '" y2="' + (groundY + 6) + '"/>';
+    s += '<text class="txt-cg" x="' + ((frontContactX + steerGroundX) / 2) +
+         '" y="' + (groundY + 20) + '" text-anchor="middle">avance ' +
+         (g.trail * 1000).toFixed(0) + ' mm</text>';
+
+    // centro de masas
+    s += '<circle class="cg-ring" cx="' + cgX + '" cy="' + cgY + '" r="9"/>';
+    s += '<line class="cg-cross" x1="' + (cgX - 13) + '" y1="' + cgY + '" x2="' + (cgX + 13) + '" y2="' + cgY + '"/>';
+    s += '<line class="cg-cross" x1="' + cgX + '" y1="' + (cgY - 13) + '" x2="' + cgX + '" y2="' + (cgY + 13) + '"/>';
+    s += '<text class="txt-cg" x="' + (cgX + 14) + '" y="' + (cgY - 12) + '">CdM</text>';
+
+    // cota distancia entre ejes
+    var dimY = groundY + 42;
+    s += '<line class="linea-dim" x1="' + rearContactX + '" y1="' + (groundY + 8) + '" x2="' + rearContactX + '" y2="' + (dimY + 4) + '"/>';
+    s += '<line class="linea-dim" x1="' + frontContactX + '" y1="' + (groundY + 8) + '" x2="' + frontContactX + '" y2="' + (dimY + 4) + '"/>';
+    s += '<line class="linea-dim" x1="' + rearContactX + '" y1="' + dimY + '" x2="' + frontContactX + '" y2="' + dimY + '"/>';
+    s += '<text class="txt-dim" x="' + ((rearContactX + frontContactX) / 2) + '" y="' + (dimY + 16) +
+         '" text-anchor="middle">p = ' + estado.wheelbase.toFixed(3) + ' m</text>';
+
+    // angulo de lanzamiento
+    s += '<text class="txt-cg" x="' + (steerGroundX + 6) + '" y="' + (groundY - 10) +
+         '">ε ' + estado.rake.toFixed(1) + '°</text>';
+
+    svg.innerHTML = s;
+  }
+
+  // ---- Lecturas ----
+  var lecturas = document.getElementById("lecturas");
+  function pintarLecturas() {
+    var g = derivadas();
+    var pd = Math.round(g.fracDelante * 100);
+    lecturas.innerHTML =
+      tile("Avance (trail)", (g.trail * 1000).toFixed(0), "mm") +
+      tile("Avance normal", (g.normalTrail * 1000).toFixed(0), "mm") +
+      tileReparto(pd) +
+      tile("Límite caballito", g.caballito.toFixed(1), "m/s²") ;
+  }
+  function tile(k, v, u) {
+    return '<div class="tile"><div class="k">' + k + '</div>' +
+      '<div class="v">' + v + ' <span class="u">' + u + '</span></div></div>';
+  }
+  function tileReparto(pd) {
+    return '<div class="tile tile--reparto"><div class="k">Reparto del/tras</div>' +
+      '<div class="v">' + pd + ' / ' + (100 - pd) + ' <span class="u">%</span></div>' +
+      '<div class="bar"><i style="width:' + pd + '%"></i></div></div>';
+  }
+
+  // ---- Controles ----
+  var grupos = document.getElementById("grupos");
+  var inputs = {};
+  function construirControles() {
+    var orden = ["Dirección", "Masas", "Tren trasero"];
+    var html = orden.map(function (grupo) {
+      var filas = PARAMS.filter(function (p) { return p[7] === grupo; }).map(function (p) {
+        var clave = p[0], etq = p[1], min = p[2], max = p[3], paso = p[4], unidad = p[6], fijo = p[8];
+        var id = "c_" + clave;
+        return '<div class="control">' +
+          '<div class="fila"><label for="' + id + '">' + etq + '</label>' +
+          '<span class="val ' + (fijo ? "fijo" : "") + '" id="v_' + clave + '"></span></div>' +
+          '<input type="range" id="' + id + '" data-clave="' + clave + '" ' +
+          'min="' + min + '" max="' + max + '" step="' + paso + '" value="' + estado[clave] + '"' +
+          (fijo ? " disabled" : "") + '/>' +
+          '<span class="rng">' + min + (unidad ? " " + unidad : "") + '  –  ' + max + (unidad ? " " + unidad : "") +
+          (fijo ? "  ·  fijo (configs/mx.yaml)" : "") + '</span>' +
+          '</div>';
+      }).join("");
+      return '<fieldset><legend>' + grupo + '</legend>' + filas + '</fieldset>';
+    }).join("");
+    grupos.innerHTML = html;
+    PARAMS.forEach(function (p) {
+      var el = document.getElementById("c_" + p[0]);
+      inputs[p[0]] = el;
+      if (!p[8]) el.addEventListener("input", function () {
+        estado[p[0]] = parseFloat(el.value);
+        actualizar();
+      });
+    });
+  }
+
+  function fmt(clave) {
+    var p = PARAMS.find(function (x) { return x[0] === clave; });
+    var v = estado[clave];
+    var dec = p[4] < 0.001 ? 4 : (p[4] < 0.01 ? 3 : (p[4] < 1 ? (clave === "cg_x_from_front" ? 3 : 2) : 0));
+    return v.toFixed(dec) + (p[6] ? " " + p[6] : "");
+  }
+
+  function actualizar() {
+    PARAMS.forEach(function (p) {
+      var vEl = document.getElementById("v_" + p[0]);
+      if (vEl) vEl.textContent = fmt(p[0]);
+      if (inputs[p[0]] && !p[8]) inputs[p[0]].value = estado[p[0]];
+    });
+    dibujar();
+    pintarLecturas();
+    try { localStorage.setItem(CLAVE_LS, JSON.stringify(estado)); } catch (e) {}
+  }
+
+  document.getElementById("reset").addEventListener("click", function () {
+    PARAMS.forEach(function (p) { estado[p[0]] = p[5]; });
+    actualizar();
+  });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-preset]"), function (b) {
+    b.addEventListener("click", function () {
+      var pr = PRESETS[b.getAttribute("data-preset")];
+      Object.keys(pr).forEach(function (k) { estado[k] = pr[k]; });
+      actualizar();
+    });
+  });
+
+  construirControles();
+  actualizar();
+})();
+</script>
