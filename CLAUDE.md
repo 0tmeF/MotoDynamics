@@ -91,5 +91,7 @@ ruff check .
 - Física nueva: primero la sección en `docs/theory.md` (ecuación y decisiones
   de modelado), luego el código que la implementa, luego el test que la fija.
 - Tras tocar lógica: correr el runner y reportar la salida real.
-- Commit de checkpoint al cerrar cada paso. Push solo con OK del desarrollador.
+- Commit de checkpoint al cerrar cada paso, con push automático en la rama
+  actual (regla global). Sigue pidiendo OK para `push --force`, historia
+  reescrita o un remoto nuevo.
 - Rama antes para un cambio amplio.
