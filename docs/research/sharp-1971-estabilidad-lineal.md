@@ -126,6 +126,36 @@ distancia entre ejes). Útil como segunda batería de verificación cualitativa:
 p. ej. subir `K` amortigua wobble y desamortigua weave; bajar `h` mejora weave
 a alta y baja velocidad; acortar el avance agrava la inestabilidad de capsize.
 
+## Fuentes secundarias (forma en matrices M/C/K)
+
+Sharp 1971 da las ecuaciones término a término, no como matrices. Para una
+formulación en `M·q'' + C·q' + K·q = 0` con ejemplo numérico resuelto,
+candidatas revisadas:
+
+- **Meijaard, Papadopoulos, Ruina, Schwab (2007)**, "Linearized dynamics
+  equations for the balance and steer of a bicycle: a benchmark and review",
+  *Proc. R. Soc. A* 463. PDF abierto:
+  `http://bicycle.tudelft.nl/schwab/Publications/meijaard2007linearized.pdf`.
+  Da `M`, `C1`, `K0`, `K2` explícitas y autovalores a precisión alta. **Es
+  bicicleta**: 2 GDL (balanceo + dirección), sin cuerpo delantero separado, sin
+  neumático con relajación → no tiene wobble. Sirve para validar la numérica
+  del solver de autovalores y la parte capsize/weave-de-balanceo, no el modelo
+  completo.
+- **Cossalter, Lot, Maggio (2004)**, "The Modal Analysis of a Motorcycle in
+  Straight Running and on a Curve", *Meccanica* 39. Resultados modales
+  (weave/wobble/capsize/rear-wobble) para una moto deportiva de producción.
+  De pago; no accesible desde aquí ahora.
+- **Sharma & Limebeer / MDPI (2020)**, "Analysis of the Phenomena Causing Weave
+  and Wobble in Two-Wheelers", *Applied Sciences* 10(19), 6826. Acceso abierto
+  (CC-BY) pero Cloudflare bloquea la descarga automática. **Pendiente**: bajar
+  el PDF a mano y añadirlo al análisis; probablemente trae matrices y juego de
+  parámetros de moto deportiva utilizables como referencia GP.
+
+Decisión operativa: implementar el modelo de Sharp 1971 (que está completo
+arriba) y calibrarlo contra su propio benchmark; usar Meijaard 2007 como test
+de la numérica. Los juegos GP/MX se construyen cuando haya una fuente con
+parámetros de moto deportiva y de campo (la MDPI 2020 es la vía más probable).
+
 ## Cómo se usa en MotoDynamics
 
 1. `docs/theory.md` §3: registrar el modelo (ecuaciones y decisiones).
